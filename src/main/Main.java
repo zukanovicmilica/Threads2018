@@ -1,5 +1,5 @@
 /*
- * Created on May 9, 2018
+g * Created on May 9, 2018
  *
  */
 package main;
@@ -14,7 +14,9 @@ public class Main {
 //        t.waitDelay();
 //        t.loopDelay();
 //        t.threadWaitDelay();
-        t.testSingInThreads();
+         t.testSingInThreads();
+        
+        
     }
 
 }
