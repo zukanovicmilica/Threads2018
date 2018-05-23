@@ -6,6 +6,8 @@ package test;
 
 import java.util.Scanner;
 
+import javax.swing.JTextArea;
+
 import music.Performance;
 import music.Singer;
 import music.Synchronizer;
@@ -18,15 +20,17 @@ public class Test {
 	private Singer pattiSmith;
 	private Singer bruceSpringsteen;
 	private Singer choir;
+	private Synchronizer synch;
 
-	private void initializeSingingInThreads() {
+	public void initializeSingingInThreads(JTextArea textArea) {
 		String lyrics1 = "Because the night";
 		String lyrics2 = "Belongs to lovers";
-		String lyrics3 = "Because the night" + "/n" + "Belong to lust";
+		String lyrics3 = "Because the night" + '\n' + "Belong to lust";
 
 		boolean stopIt = false;
-		Synchronizer synch = new Synchronizer(false, false, false);
-
+		synch = new Synchronizer(false, false, false, false, false, false, textArea);
+		synch.setTextArea(textArea);
+		
 		Performance firstVoicePerformance = new Performance(lyrics1, 1500);
 		Performance secondVoicePerformance = new Performance(lyrics2, 1500);
 		Performance thirdVersePerformance = new Performance(lyrics3, 1500);
@@ -36,9 +40,19 @@ public class Test {
 		choir = new Singer("Choir", Voice.THIRD, thirdVersePerformance, stopIt, synch);
 	}
 
-	public void testSingInThreads() {
+	public synchronized void startIt() {
+		pattiSmith.start();
+		bruceSpringsteen.start();
+		choir.start();
+	}
 
-		initializeSingingInThreads();
+	public synchronized void stop() {
+		pattiSmith.setStopIt(true);
+		bruceSpringsteen.setStopIt(true);
+		choir.setStopIt(true);
+	}
+
+	public void testSingInThreads() {
 
 		pattiSmith.start();
 		bruceSpringsteen.start();
@@ -95,6 +109,50 @@ public class Test {
 			e.printStackTrace();
 		}
 		w2.start();
+	}
+
+	public synchronized void startPatti() {
+		synch.setPatti(true);
+		synch.setFirstVoiceFlag(true);
+		synch.setSecondVoiceFlag(false);
+		synch.setChoir(false);
+		pattiSmith.start();
+	}
+	
+	public synchronized void stopPatti() {
+		pattiSmith.setStopIt(true);
+		synch.setPatti(false);
+	}
+
+	public synchronized void startBruce() {
+		synch.setBruce(true);
+		synch.setSecondVoiceFlag(true);
+		synch.setFirstVoiceFlag(false);
+		synch.setChoir(false);
+		bruceSpringsteen.start();
+	}
+	
+	public synchronized void stopBruce() {
+		bruceSpringsteen.setStopIt(true);
+		synch.setBruce(false);
+	}
+
+	public synchronized void startChoir() {
+		synch.setChoir(true);
+		synch.setThirdVerse(true);
+		synch.setSecondVoiceFlag(false);
+		synch.setFirstVoiceFlag(false);
+		choir.start();
+	}
+
+	public synchronized void stopChoir() {
+		choir.setStopIt(true);
+		synch.setChoir(false);
+	}
+
+	public Test getT() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
