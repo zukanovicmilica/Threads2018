@@ -31,9 +31,9 @@ public class Test {
 		synch = new Synchronizer(false, false, false, false, false, false, textArea);
 		synch.setTextArea(textArea);
 		
-		Performance firstVoicePerformance = new Performance(lyrics1, 1500);
-		Performance secondVoicePerformance = new Performance(lyrics2, 1500);
-		Performance thirdVersePerformance = new Performance(lyrics3, 1500);
+		Performance firstVoicePerformance = new Performance(lyrics1, 2000);
+		Performance secondVoicePerformance = new Performance(lyrics2, 2000);
+		Performance thirdVersePerformance = new Performance(lyrics3, 2000);
 
 		pattiSmith = new Singer("Patti Smith", Voice.FIRST, firstVoicePerformance, stopIt, synch);
 		bruceSpringsteen = new Singer("Bruce Springsteen", Voice.SECOND, secondVoicePerformance, stopIt, synch);
